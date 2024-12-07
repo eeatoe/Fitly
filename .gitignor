@@ -1,0 +1,13 @@
+/log/*
+!log/.keep
+
+/storage/*
+!storage/.keep
+
+/config/master.key
+/config/credentials.yml.enc
+
+/vendor/bundle
+
+/tmp/pids/spring.pid
+/tmp/pids/spring.pid.lock
