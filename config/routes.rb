@@ -4,10 +4,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       root 'home#index'
 
-      scope module: 'user' do
-        resources :users, only: [:show, :update, :destroy]
+      resources :users, only: [:show, :update, :destroy]
+
+      namespace :auth do
         resources :registrations, only: [:create]
-        resources :sessions, only: [:create]
+        resources :sessions, only: [:create, :destroy]
         
         resources :passwords do
           collection do
