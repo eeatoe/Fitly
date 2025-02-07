@@ -7,13 +7,13 @@ Rails.application.routes.draw do
       resources :users, only: [:show, :update, :destroy]
 
       namespace :auth do
-        resources :registrations, only: [:create]
-        resources :sessions, only: [:create, :destroy]
+        resource :registrations, only: [:create]
+        resource :sessions, only: [:create, :destroy]
         
-        resources :passwords do
+        resource :passwords, only: [] do
           collection do
-            post :reset
-            post :update
+            post :reset # Отправка ссылки на сброс пароля
+            patch :update
           end
         end
       end

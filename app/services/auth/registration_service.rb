@@ -7,7 +7,9 @@ class Auth::RegistrationService
     user = User.new(@params)
 
     if user.save
-      Success.new(user)
+      access_token = Auth::JwtAccessTokenService.encode(user_id: user.id)
+      refresh_token = Auth::RefreshTokenService.call(user)
+      Success.new(user, access_token, refresh_token)
     else
       Failure.new(user.errors.full_messages)
     end
@@ -18,8 +20,8 @@ class Auth::RegistrationService
   attr_reader :params
 
   class Success
-    attr_reader :user
-    def initialize(user); @user = user; end
+    attr_reader :user, :access_token, :refresh_token
+    def initialize(user, access_token, refresh_token); @user = user; end
     def success?; true; end
   end
 
