@@ -18,13 +18,13 @@ gem "jbuilder"
 gem "bcrypt", "~> 3.1.7"
 
 # A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
-gem 'jwt', '2.9.3'
+gem "jwt", "2.9.3"
 
 # ActiveModel validation for email. Including MX lookup and disposable email blacklist
 gem "valid_email2", "~> 5.3.0"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "tzinfo-data", platforms: %i[windows jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -35,10 +35,22 @@ gem "bootsnap", require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
 
+# Next-generation Ruby 3.2.1+ sampling profiler. Tracks multiple threads, GVL activity, GC pauses, idle time, and more.
+# gem 'vernier', '~> 1.2'
+
+# Simple, efficient background processing for Ruby.
+# gem 'sidekiq', '~> 7.1'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ]
-  gem 'rspec-rails', '~> 7.0.0'
+  gem "debug", platforms: %i[mri windows]
+  gem "rspec-rails", "~> 7.0.0"
+
+  # Runs your tests in a random timezone
+  gem "zonebie", "~> 0.6.1"
+
+  # Ruby Style Guide, with linter & automatic code fixer
+  gem "standard", "~> 1.44"
 end
 
 group :development do

@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
-
   namespace :api do
     namespace :v1 do
-      root 'home#index'
-
+      root "home#index"
+      
       resources :users, only: [:show, :update, :destroy]
 
       namespace :auth do
@@ -23,5 +22,5 @@ Rails.application.routes.draw do
     end
   end
 
-  get "up" => "rails/health#show", as: :rails_health_check
+  get "up" => "rails/health#show", :as => :rails_health_check
 end
