@@ -2,16 +2,17 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       root "home#index"
+      
+      resources :users, only: [:show, :update, :destroy]
 
-      scope module: "user" do
-        resources :users, only: [:show, :update, :destroy]
-        resources :registrations, only: [:create]
-        resources :sessions, only: [:create]
-
-        resources :passwords do
+      namespace :auth do
+        resource :registrations, only: [:create]
+        resource :sessions, only: [:create, :destroy]
+        
+        resource :passwords, only: [] do
           collection do
-            post :reset
-            post :update
+            post :reset # Отправка ссылки на сброс пароля
+            patch :update
           end
         end
       end

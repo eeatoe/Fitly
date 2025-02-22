@@ -18,7 +18,6 @@ class User < ApplicationRecord
     format: { with: URI::MailTo::EMAIL_REGEXP },
     length: { maximum: 254 }
 
-
   validates :password, presence: true, 
     format: { with: Constants::PASSWORD_FORMAT }, if: -> { password.present? },
     length: { minimum: 6, maximum: 64 }
