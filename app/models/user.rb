@@ -6,7 +6,6 @@ class User < ApplicationRecord
   # Константы (constants)
   VALID_GENDERS = %w[male female non-binary].freeze
   VALID_EXPERIENCE_LEVELS = %w[beginner intermediate advanced].freeze
-  VALID_FITNESS_GOALS = %w[fat_loss, muscle_gain, maintenance, endurance_training, strength_training, flexibility, functional_fitness].freeze
 
   # Связи (associations)
   has_many :user_workouts
@@ -16,20 +15,20 @@ class User < ApplicationRecord
   # Валидации (validations)
   validates :email, presence: true, 
     uniqueness: true, 
-    length: { maximum: 254 }, 
-    format: { with: URI::MailTo::EMAIL_REGEXP }
+    format: { with: URI::MailTo::EMAIL_REGEXP },
+    length: { maximum: 254 }
 
 
   validates :password, presence: true, 
-    length: { minimum: 6, maximum: 64 },
-    format: { with: Constants::PASSWORD_FORMAT }, if: -> { password.present? }
+    format: { with: Constants::PASSWORD_FORMAT }, if: -> { password.present? },
+    length: { minimum: 6, maximum: 64 }
 
   validates :name, presence: true,
     format: { with: Constants::LETTERS_ONLY_FORMAT },
     length: { within: 2..50 }
 
   validates :gender, allow_nil: true,
-    inclusion: { in: %w[male female non-binary] }
+    inclusion: { in: VALID_GENDERS }
 
   validates :height, allow_nil: true,
     numericality: { greater_than: 0, less_than_or_equal_to: 250 }
@@ -38,6 +37,9 @@ class User < ApplicationRecord
   validates :weight, allow_nil: true,
     numericality: { greater_than: 0, less_than_or_equal_to: 400 },
     format: { with: /\A\d+(\.\d{1})?\z/ }
+
+  validates :experience_level, allow_nil: true,
+    inclusion: { in: VALID_EXPERIENCE_LEVELS }
 
   # Скоупы (scopes)
   # ...

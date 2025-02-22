@@ -14,9 +14,13 @@ en:
             gender:
               inlusion: "Gender is invalid"
             height:
-              greater_than: "Height is invalid"
-              less_than_or_equal_to: "Height is invalid"
+              greater_than: "Height must be greater than 0"
+              less_than_or_equal_to: "Height must be less than or equal to 250"
             weight:
-              greater_than: "Weight is invalid"
-              less_than_or_equal_to: "Weight is invalid"
+              greater_than: "Weight must be greater than 0"
+              less_than_or_equal_to: "Weight must be less than or equal to 400"
+              invalid: "Weight format is invalid"
             experience_level:
+              inlusion: "Experience level is invalid"
+        workout:
+          attributes:
