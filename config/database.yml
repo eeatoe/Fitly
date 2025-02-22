@@ -82,3 +82,6 @@ production:
   database: fitly_production
   username: fitly
   password: <%= ENV["FITLY_DATABASE_PASSWORD"] %>
+  variables:
+  statement_timeout: 30s
+  lock_timeout: 2s

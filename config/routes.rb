@@ -1,14 +1,13 @@
 Rails.application.routes.draw do
-
   namespace :api do
     namespace :v1 do
-      root 'home#index'
+      root "home#index"
 
-      scope module: 'user' do
+      scope module: "user" do
         resources :users, only: [:show, :update, :destroy]
         resources :registrations, only: [:create]
         resources :sessions, only: [:create]
-        
+
         resources :passwords do
           collection do
             post :reset
@@ -22,5 +21,5 @@ Rails.application.routes.draw do
     end
   end
 
-  get "up" => "rails/health#show", as: :rails_health_check
+  get "up" => "rails/health#show", :as => :rails_health_check
 end

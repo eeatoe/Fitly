@@ -1,31 +1,58 @@
-require 'bcrypt'
+require "bcrypt"
 
 class User < ApplicationRecord
   has_secure_password
 
-  has_many :workouts, dependent: :destroy
+  # Константы (constants)
+  VALID_GENDERS = %w[male female non-binary].freeze
+  VALID_EXPERIENCE_LEVELS = %w[beginner intermediate advanced].freeze
+  VALID_FITNESS_GOALS = %w[fat_loss, muscle_gain, maintenance, endurance_training, strength_training, flexibility, functional_fitness].freeze
 
-  normalizes :email, with: -> email { email.strip.downcase }
+  # Связи (associations)
+  has_many :user_workouts
+  has_many :workouts, through: :user_workouts
+  has_and_belongs_to_many :fitness_goals
 
-  # validates_with EmailValidator
-  # validates_with PasswordValidator
-  validates :password_confirmation, presence: true
+  # Валидации (validations)
+  validates :email, presence: true, 
+    uniqueness: true, 
+    length: { maximum: 254 }, 
+    format: { with: URI::MailTo::EMAIL_REGEXP }
 
-  validates :name, 
-            presence: true,
-            format: { with: /\A[A-Za-z]+\z/, message: "can only include letters" },
-            length: { within: 2..50,
-                      too_short: "must be at least 2 characters",
-                      too_long: "must be at most 50 characters" }
 
-  validates :gender, inclusion: { in: %w[male female non-binary] }, allow_nil: true
+  validates :password, presence: true, 
+    length: { minimum: 6, maximum: 64 },
+    format: { with: Constants::PASSWORD_FORMAT }, if: -> { password.present? }
 
-  validates :height, 
-            numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 300 }, 
-            allow_nil: true
-            
-  validates :weight, 
-            numericality: { greater_than: 0, less_than_or_equal_to: 500 }, 
-            format: { with: /\A\d+(\.\d{1})?\z/, message: "can have at most one decimal place" }, 
-            allow_nil: true
+  validates :name, presence: true,
+    format: { with: Constants::LETTERS_ONLY_FORMAT },
+    length: { within: 2..50 }
+
+  validates :gender, allow_nil: true,
+    inclusion: { in: %w[male female non-binary] }
+
+  validates :height, allow_nil: true,
+    numericality: { greater_than: 0, less_than_or_equal_to: 250 }
+    
+
+  validates :weight, allow_nil: true,
+    numericality: { greater_than: 0, less_than_or_equal_to: 400 },
+    format: { with: /\A\d+(\.\d{1})?\z/ }
+
+  # Скоупы (scopes)
+  # ...
+
+  # Коллбэки (callbacks)
+  before_save :normalize_email
+  before_save :normalize_name
+
+  private
+
+  def normalize_email
+    self.email = email.downcase.strip if email.present?
+  end
+
+  def normalize_name
+    self.name = name.titleize if name.present?
+  end
 end
