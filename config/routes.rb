@@ -7,7 +7,8 @@ Rails.application.routes.draw do
 
       namespace :auth do
         resource :registrations, only: [:create]
-        resource :sessions, only: [:create, :destroy]
+        resource :sessions, only: [:create, :destroy] # Выдача access токена
+        post 'refresh', to: 'refresh_tokens#create' # Выдача refresh токена
         
         resource :passwords, only: [] do
           collection do

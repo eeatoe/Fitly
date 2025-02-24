@@ -1,6 +1,4 @@
 en:
-  hello: "Hello world"
-
   activerecord:
     errors:
       models:
@@ -24,3 +22,44 @@ en:
               inlusion: "Experience level is invalid"
         workout:
           attributes:
+            name:
+              blank: "Name can't be blank"
+              too_short: "Name is too short (minimum is %{count} characters)"
+              too_long: "Name is too long (maximum is %{count} characters)"
+              format: "Name has invalid characters"
+              taken: "Name has already been taken"
+            description:
+              blank: "Description can't be blank"
+              too_long: "Description is too long (maximum is %{count} characters)"
+              format: "Description contains invalid characters"
+            duration:
+              blank: "Duration can't be blank"
+              not_a_number: "Duration must be a number"
+              greater_than: "Duration must be greater than 0"
+            difficulty_level:
+              blank: "Difficulty level can't be blank"
+              inclusion: "Difficulty level is not valid"
+            location:
+              blank: "Location can't be blank"
+              format: "Location has an invalid format"
+
+
+  auth:
+    success:
+      logout: "Logged out successfully"
+    errors:
+      access_token:
+        expired_jwt_signature: "Token expired"
+        invalid_jwt_token: "Invalid token: %{error}"
+        invalid_credentials: "Invalid email or password"
+      refresh_token:
+        invalid_refresh_token: "Invalid or expired refresh token"
+  user:
+    errors:
+      
+  workout:
+    errors:
+      favorite_workouts:
+        already_added: "Workout is already added to favorites"
+        not_in_favorites: "Workout is not in favorites"
+      invalid_locations: "Contains invalid locations: %{locations}"
