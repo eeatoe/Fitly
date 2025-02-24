@@ -32,6 +32,9 @@ class Workout < ApplicationRecord
   # Коллбеки (callbacks)
   before_save :normalize_description
 
+  # Скопы (scopes)
+  scope :by_expert, -> { where(is_expert: true) }
+
   private
 
   def expert?
