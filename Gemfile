@@ -11,8 +11,11 @@ gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
+# The fastest JSON parser and object serializer.
+gem 'oj', "~> 3.16.9"
+
+# Fast, simple and easy to use JSON:API serialization library (also known as fast_jsonapi).
+gem "jsonapi-serializer", "~> 2.2.0"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"
@@ -44,10 +47,15 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri windows]
+
+  # rspec-rails integrates the Rails testing helpers into RSpec.
   gem "rspec-rails", "~> 7.0.0"
 
   # Runs your tests in a random timezone
   gem "zonebie", "~> 0.6.1"
+
+  # Annotates Rails/ActiveRecord Models, routes, fixtures, and others based on the database schema.
+  gem 'annotaterb', "~> 4.14.0"
 
   # Ruby Style Guide, with linter & automatic code fixer
   gem "standard", "~> 1.44"

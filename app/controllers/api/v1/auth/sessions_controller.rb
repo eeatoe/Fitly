@@ -1,5 +1,6 @@
 class Api::V1::Auth::SessionsController < Api::V1::ApplicationController
   skip_before_action :authenticate_user!, only: [:create]
+  
   def create
     result = Auth::LoginService.new(login_params).call
 
@@ -16,7 +17,7 @@ class Api::V1::Auth::SessionsController < Api::V1::ApplicationController
 
   def destroy
     current_user.update!(refresh_token: nil, refresh_token_expires_at: nil)
-    render json: { message: 'Logged out successfully' }, status: :ok
+    render json: { message: I18n.t('auth.success.logout') }, status: :ok
   end
 
   private

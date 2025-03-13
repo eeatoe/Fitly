@@ -16,7 +16,7 @@ class Api::V1::ApplicationController < ApplicationController
     if decoded && decoded[:exp] > Time.now.to_i
       @current_user = User.find_by(id: decoded[:user_id])
     else
-      render json: { errors: ['Token expired or invalid'] }, status: :unauthorized
+      render json: { errors: [(I18n.t 'auth.errors.access_token.expired_jwt_signature')] }, status: :unauthorized
     end
   end
 end

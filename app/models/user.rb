@@ -3,7 +3,16 @@ require "bcrypt"
 class User < ApplicationRecord
   has_secure_password
 
+  # Перечисления (enums)
+  enum role: { user: 0, expert: 1, admin: 2 }
+
   # Константы (constants)
+  PASSWORD_FORMAT = /\A
+    (?=.*\d)      # Должен содержать цифры
+    (?=.*[a-z])   # Должен содержать строчные буквы
+    (?=.*[A-Z])   # Должен содержать заглавные буквы
+  \z/x
+
   VALID_GENDERS = %w[male female non-binary].freeze
   VALID_EXPERIENCE_LEVELS = %w[beginner intermediate advanced].freeze
 
@@ -23,8 +32,10 @@ class User < ApplicationRecord
     length: { minimum: 6, maximum: 64 }
 
   validates :name, presence: true,
-    format: { with: Constants::LETTERS_ONLY_FORMAT },
+    format: { with: Constants::NAME_FORMAT },
     length: { within: 2..50 }
+
+  validates :role, presence: true
 
   validates :gender, allow_nil: true,
     inclusion: { in: VALID_GENDERS }
